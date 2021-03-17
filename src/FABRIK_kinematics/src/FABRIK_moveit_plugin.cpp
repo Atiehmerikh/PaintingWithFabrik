@@ -440,7 +440,9 @@ int FABRIKKinematicsPlugin::CartToJnt(KDL::ChainIkSolverVelMimicSVD& ik_solver, 
 
   unsigned int i;
   bool success = false;
-  // cout<<p_in<<endl;
+  cout<<"eeeeeeeeeeeeeeeeeeeeeeee:"<<endl<<p_in.p<<endl;
+  cout<<"MMMMMMMMMMMMMMMMMMMMMMMM:"<<endl<<p_in.M<<endl;
+
   // cout<<"-----------------"<<std::to_string(p_in.p[0])<<" "<<std::to_string(p_in.p[1])<<" "<<std::to_string(p_in.p[2])<<endl;
 
   for (i = 0; i < max_iter; ++i)
@@ -499,57 +501,44 @@ int FABRIKKinematicsPlugin::CartToJnt(KDL::ChainIkSolverVelMimicSVD& ik_solver, 
 
     ROS_DEBUG_STREAM_NAMED("kdl", "      delta_q: " << delta_q);
     ROS_DEBUG_STREAM_NAMED("kdl", "      q: " << q_out);
+    
+    
+
   }
 
   int result = (i == max_iter) ? -3 : (success ? 0 : -2);
 
 
-
-
-    
-
-
-
   // // here we call FABRIK and fill q_out by it
-	string str = exec(("python \"/home/atieh/Documents/PHD/PaintingWithFabrik/src/FABRIK_kinematics/src/Main.py\" " + std::to_string(p_in.p[0]) + " " + std::to_string(p_in.p[1]) + " " + std::to_string(p_in.p[2])).c_str());
-  // //string str = exec("python \"/home/atieh/Documents/PHD/PaintingWithFabrik/src/FABRIK_kinematics/src/Main.py\"");
-  // std::cout<<str;
+	// string str = exec(("python \"/home/atieh/Documents/PHD/PaintingWithFabrik/src/FABRIK_kinematics/src/Main.py\" " + std::to_string(p_in.p[0]) + " " + std::to_string(p_in.p[1]) + " " + std::to_string(p_in.p[2])).c_str());
+  // // //string str = exec("python \"/home/atieh/Documents/PHD/PaintingWithFabrik/src/FABRIK_kinematics/src/Main.py\"");
+  // // std::cout<<str;
 
-  int counter = 0;
+  // int counter = 0;
 
-  std::string s = str.substr(1, str.length());
-  std::string delimiter = ",";
+  // std::string s = str.substr(1, str.length());
+  // std::string delimiter = ",";
 
-  size_t pos = 0;
-  std::string token;
-  while ((pos = s.find(delimiter)) != std::string::npos) {
-      token = s.substr(0, pos);
-      float detected_q = std::stof(token);
-      q_out(counter) = detected_q;
-      counter++;
-      // std::cout << token << std::endl;
-      s.erase(0, pos + delimiter.length());
-      }
-  float detected_s = std::stof(s);
-  q_out(counter) = detected_s;
-
-
-  std::cout<<q_out;
+  // size_t pos = 0;
+  // std::string token;
+  // while ((pos = s.find(delimiter)) != std::string::npos) {
+  //     token = s.substr(0, pos);
+  //     float detected_q = std::stof(token);
+  //     q_out(counter) = detected_q;
+  //     counter++;
+  //     // std::cout << token << std::endl;
+  //     s.erase(0, pos + delimiter.length());
+  //     }
+  // float detected_s = std::stof(s);
+  // q_out(counter) = detected_s;
 
 
-
-
-
-
-
-
-
-
+  // std::cout<<q_out;
 
 
 
   ROS_DEBUG_STREAM_NAMED("kdl", "Result " << result << " after " << i << " iterations: " << q_out);
-  //std::cout <<q_out;
+  std::cout <<"-----------------"<<endl<<q_out<<endl;
   return result;
 }
 
